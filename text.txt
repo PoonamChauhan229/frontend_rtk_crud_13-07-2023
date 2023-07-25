@@ -1,0 +1,265 @@
+Lets build our store.
+Today session is all about Building our own store.
+Today we are going understand how we can manage our data very efficiently.
+
+We have two types of layers
+UI layer
+Data layer
+
+These 2 layers work together
+
+UI Layer:
+
+
+We are going to see today handling the data in more effieceint way.
+If we are building small app, everything is managed with state, props and other stuffs.
+
+But if you have to manage the big big application / full fleged app
+then handling data for it is very crtical.
+
+For that we use a library , which is known as redux.
+
+Why do we use UseContext?
+To avoid propdrilling.
+
+What is the Advatages of React, Why do we even need REDUX.
+>We need Redux to manage our Data Layer , huge amount of Data.
+    eg: our webpage holds lot of data , to hanle we use REDUX for that.
+
+When our project rows , like redux library it works a lot.
+So instead of using UseContext, we shall use a redux store.
+
+Redux is used for Data Managemnet
+and there were major issues using redux
+It is complex to setup
+it has a huge learning curve
+it was very tough
+it was very complicated
+there was lot of code by using copypaste
+
+Redux has its own importance, if you are building an large scale big application
+
+Remember React and Redux are 2 different things.
+Lot of developers , think React and Redux are same but its not lyk that, its different.
+
+Redux has come up with Redux Toolkit.
+https://redux-toolkit.js.org/
+
+Read the site 
+
+And now we shall reduxtoolkit for the App.
+
+Let us understand the Architecture:
+
+We will build an cart page and involves lot of back and forth in data.
+
+React Developer Tools => Chrome Extension
+This tool helps in debugging.
+
+What is Redux:
+It is an big object and it has different different sections into it.
+Which component can access Redux Store=> All the component can access Redux store.
+
+When you create an UseState Varibale, what is the scope of it?
+> It is restricted to only to that component
+but here its not lyk that.
+> Prop can be passes down, Props is an way in which we can get the data to the component from its parent 
+
+Store is an central thing, it is not tied to any component.
+Webapp is different and the store is different.
+
+This is the redux store.
+We will have 1 single store.
+
+Now, you would say its an very poor thing to keep it in 1 place.
+NO, its poor way , we will create an logical seperation to our store.
+
+We will create slices of our store.
+
+Each store will have different slices
+What all slice can our App haas
+>user
+> cart slice
+>theme slice
+etc 
+and this is how we will segegrate the data.
+
+Supppose , this is cart slice , user slice and we can have multiple such slices.
+A slice is a portion of the store.
+
+Now, moving on to the next thing.
+our component cannot directly modify the store.
+if i click on this plus button, i cannot directly modify the store.
+
+What here , i have to do is dispatch an action
+
+let us give this action name as addItem, we can give any name.
+
+Now what will this action do is , it will call an function
+And this function will modify the cart.
+
+We cannot directly modify the cart.
+
+Let me repeat,
+if we click on this plus button, it will dispatch an action which will call the function which will modify our cart.
+
+Now, u might ask, why it cant directky modify the store.
+
+When there is an lare application so you dont want random components to randomly modify our store.
+we need to keep the track of everything.
+
+This is the beeter way of handling data.
+
+Now, this function is known as Reducer.
+What happens when you call a reducer, it updates the slice of our store.
+
+We have just write to the store and how we will read from the store.
+that means how we will get the cart value increased.
+
+There is something known as selector.
+if you want to read the cart , you have to call the selector.
+the selector will give you the information to update the cart
+
+
+Install extra library
+npm install @reduxjs/toolkit
+npm install react-redux
+
+Why 2 library:
+npm install react-redux
+redux main core job is to maintain the store, manage the store.
+
+npm install @reduxjs/toolkit
+bridge between the redux and react.
+
+just like react and react-dom.
+
+create an seprate folder
+>utlis
+>store.js
+
+store.js
+
+import { configureStore } from "@reduxjs/toolkit";
+const store=configureStore({
+    //the store will contain slices.
+})
+export default store;
+The store we have created now.
+
+Our store is different and our App is different.
+
+How do i connect or provide the store to the application
+
+Three is a way,
+we will need a provider, but how?
+
+Let us provide this to whole application
+
+let us go to App.js and provide it.
+
+Provider component we will import 
+and this provder will connect my react application to redux store.
+
+import { Provider } from "react-redux";
+
+Now, how do i provide this 
+<Provider store={store}></Provider>
+import the store as well from utklis folder.
+
+We did 2 things till now
+> configureStore=> reduxtoolkit
+>provide the store to the application> react-redux
+> and we are provding the store to the app.
+
+Now, we are ready to do the next stuff.
+
+As of now our store is very empty so let us fill it something.
+
+Lets create slices and put into our store.
+
+We can create the slice in store.js itslef but we will craete the slices in a new file
+
+const cartSlice = createSlice({})
+
+name of slice:
+initialState for the cart> initial value of the cart.
+//Items are empty
+
+How do we modify our cart
+We modify the cart by creating an reducer function
+When are these reducers called?
+on dispatch of an action
+
+Slice created=> Where hould this slice should go in
+
+My store doesnt know about the slice 
+so this slice should be put in the store also
+
+
+Create Store
+ - configureStore()-RTK
+
+Provider my store to app
+    <Provider store={store}>=> react-redux
+
+Slice=>RTK
+    createSlice({
+        name:"",
+        initialState:"",
+        reducers:{
+            addItem:(state,action)=>{}
+        }
+    })
+    export default cartSlice.reducer;
+    export const {addItem}=cartSlice.actions
+    
+Put the slice into the store.
+
+{
+    reducer:{
+        cart:cartSlice,
+        user:userSlice
+    }
+}
+
+
+After this we have to subscribe to the store.
+using useSelector
+in navbar 
+> Add to cart button
+> useSelector()
+>const cartItems=useSelector()
+
+//Job of useSelector hook is to giive access to the store
+//Some how we have build our store.
+and cart is subscribe it to it.
+
+Now we will modify our Store.
+
+Now Add button =>addItem to TaskJS.
+and now dispatch an action to it.
+onClick=()=> dispatch 
+
+Now, let us quickly build Cart Page as well
+
+
+Build a cart Page
+and get the items from there
+useSelector hook
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
