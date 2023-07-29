@@ -35,6 +35,12 @@ export default function Navbar({mode,setMode}) {
                 }>
                   Add Task
                 </Button>
+
+                <Button sx={{ color: '#fff' }} onClick={
+                  ()=>{navigate('/users/signup')}
+                }>
+                  SignUp
+                </Button>
                                
             </Box>
           </Toolbar>
