@@ -18,13 +18,15 @@ const Login = () => {
     axios.post(taskListUrl+'/users/login',values)
     .then(res=>{
             //console.log(res)
-            if(res.data.Status='Success'){
-              navigate('/')
+            console.log(res.data)
+            if(res.data.token!==''){
+              sessionStorage.setItem("token",res.data.token)
+                navigate('/')
+
             }else{
               alert('Error found')
             }
-          })
-    .then(err=>console.log(err))
+          }).then(err=>console.log(err))
 
     }
   return (

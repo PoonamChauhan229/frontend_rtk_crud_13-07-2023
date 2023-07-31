@@ -5,14 +5,17 @@ import { taskListUrl } from '../utils/constants'
 // Define a service using a base URL and expected endpoints
 export const taskApi = createApi({
   reducerPath: 'taskApi',
-  baseQuery: fetchBaseQuery({ baseUrl: taskListUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: taskListUrl}),
   tagTypes:["taskModel"],
   endpoints: (builder) => ({
     // Get All Task
     getAllTask: builder.query({
       query: () =>({
         url:"task",
-        method:"GET"
+        method:"GET",
+        headers:{
+          token:sessionStorage.getItem('token')
+        }
       }),
       providesTags: ["taskModel"],
     }),
@@ -22,7 +25,10 @@ export const taskApi = createApi({
     getTaskById:builder.query({
       query: (id) =>({
         url:`/task/${id}`,
-        method:"GET"
+        method:"GET",
+        headers:{
+          token:sessionStorage.getItem('token')
+        }
       }),
       providesTags: ["taskModel"],
     }),
@@ -32,6 +38,9 @@ export const taskApi = createApi({
       query: (taskId) => ({
         url: `/task/${taskId}`,
         method: "DELETE",
+        headers:{
+          token:sessionStorage.getItem('token')
+        }
       }),
       invalidatesTags: ["taskModel"],
     }),
@@ -45,7 +54,8 @@ export const taskApi = createApi({
         method: "PUT",
         body: updatedTask, //Task which was updated
         headers:{
-          'Content-type':'application/json; charset=UTF-8',
+          token:sessionStorage.getItem('token'),
+          'Content-type':'application/json; charset=UTF-8'            
         }
       }
       },
@@ -63,6 +73,7 @@ export const taskApi = createApi({
           body: newTask,
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            token:sessionStorage.getItem('token')
           },
         };
       },
