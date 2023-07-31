@@ -41,6 +41,12 @@ export default function Navbar({mode,setMode}) {
                 }>
                   SignUp
                 </Button>
+
+                <Button sx={{ color: '#fff' }} onClick={
+                  ()=>{navigate('/users/login')}
+                }>
+                  Login
+                </Button>
                                
             </Box>
           </Toolbar>

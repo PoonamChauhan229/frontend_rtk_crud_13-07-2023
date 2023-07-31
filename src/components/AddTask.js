@@ -40,7 +40,7 @@ export const AddTask = () => {
               />
             </div>
             <button
-              class="card-link"
+              className="card-link"
               onClick={() => {
                 addTask(newTask);
                 navigate('/');

@@ -2,37 +2,30 @@ import React, { useState } from "react";
 import { taskListUrl } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-const Signup = () => {
+const Login = () => {
   const navigate=useNavigate()
 
     const [values,setValues]=useState({
-        name:"",
         email:"",
         password:""
     })
+    axios.defaults.withCredentials=true;
     
     const handleSubmit=(event)=>{
     
       event.preventDefault();
     console.log(values)
-    axios.post(taskListUrl+'/users/signup',values)
+    axios.post(taskListUrl+'/users/login',values)
     .then(res=>{
             //console.log(res)
             if(res.data.Status='Success'){
-              navigate('/users/login')
+              navigate('/')
             }else{
               alert('Error found')
             }
           })
     .then(err=>console.log(err))
 
-      // fetch(taskListUrl+'/users/signup',{
-      //     method:"POST",
-      //     body:JSON.stringify(values),
-      //     headers:{
-      //         "Content-type":"application/json"
-      //     }
-      // }).then(()=> navigate('/'))
     }
   return (
     <div>
@@ -45,28 +38,12 @@ const Signup = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                        Sign up
+                        Login
                       </p>
 
                       <form className="mx-1 mx-md-4 "
                       onSubmit={handleSubmit}
                       >
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              id="form3Example1c"
-                              className="form-control"
-                              onChange={(e)=>{
-                                setValues({...values,name:e.target.value})
-                              }}
-                            />
-                            <label className="form-label" htmlFor="form3Example1c">
-                              Your Name
-                            </label>
-                          </div>
-                        </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
@@ -102,22 +79,9 @@ const Signup = () => {
                           </div>
                         </div>
 
-                        <div className="form-check d-flex justify-content-center mb-5">
-                          <input
-                            className="form-check-input me-2"
-                            type="checkbox"
-                            value=""
-                            id="form2Example3c"
-                          />
-                          <label className="form-check-label" htmlFor="form2Example3">
-                            I agree all statements in{" "}
-                            <a href="#!">Terms of service</a>
-                          </label>
-                        </div>
-
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button type="submit" className="btn btn-primary btn-lg">
-                            Register
+                            Login
                           </button>
                         </div>
                       </form>
@@ -140,4 +104,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
