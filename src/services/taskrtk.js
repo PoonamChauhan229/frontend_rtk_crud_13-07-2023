@@ -46,22 +46,39 @@ export const taskApi = createApi({
     }),
 
     //Update By ID
-    updateTaskById:builder.mutation({
+    // updateTaskById:builder.mutation({
+    //   query: (updatedTask) => {
+    //     console.log(updatedTask)
+    //     return{
+    //     url: `/task/${updatedTask._id}`,
+    //     method: "PUT",
+    //     body: updatedTask, //Task which was updated
+    //     headers:{
+    //       token:sessionStorage.getItem('token'),
+    //       'Content-type':'application/json; charset=UTF-8'            
+    //     }
+    //   }
+    //   },
+    //   invalidatesTags: ["taskModel"],
+
+    // }),
+
+    updateTaskById: builder.mutation({
       query: (updatedTask) => {
-        console.log(updatedTask)
-        return{
-        url: `/task/${updatedTask._id}`,
-        method: "PUT",
-        body: updatedTask, //Task which was updated
-        headers:{
-          token:sessionStorage.getItem('token'),
-          'Content-type':'application/json; charset=UTF-8'            
-        }
-      }
+          console.log(updatedTask);
+          return {
+              url: `/task/${updatedTask._id}`,
+              method: "PUT",
+              body: updatedTask, // Task which was updated
+              headers: {
+                  token: sessionStorage.getItem('token'),
+                  'Content-type': 'application/json; charset=UTF-8'
+              }
+          };
       },
       invalidatesTags: ["taskModel"],
-
-    }),
+  }),
+  
 
     //create Task:
     addNewTask: builder.mutation({
