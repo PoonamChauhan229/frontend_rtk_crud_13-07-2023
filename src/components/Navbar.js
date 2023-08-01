@@ -7,18 +7,12 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { taskListUrl } from '../utils/constants';
-import { useLogoutMutation,useGetAllTaskQuery } from '../services/taskrtk';
-import { useQueryClient } from 'react-query';
 
-import { taskApi } from '../services/taskrtk';
-export default function Navbar({ mode, setMode }) {
-  const queryClient = useQueryClient();
+export default function Navbar() {
 
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const isAuthenticated = !!sessionStorage.getItem('token');
-  const [logout, { isLoading }] = useLogoutMutation();
-  const getAllTaskQuery = useGetAllTaskQuery();
 
   const handleLogout = () => {
     setLoading(true);
@@ -32,7 +26,7 @@ export default function Navbar({ mode, setMode }) {
         sessionStorage.removeItem('token');
         setLoading(false);
         alert('Logged out successfully');
-        navigate('/');
+       window.location.reload(true)
       })
       .catch((error) => {
         setLoading(false);
