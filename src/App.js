@@ -19,11 +19,12 @@ function App() {
         <div>          
             <Navbar/>
             <Routes>
-              <Route exact path='/' element={<TaskAll/>}/>
+              
               <Route exact path='/task/:id' element={<EditTask/>}/>
               <Route exact path='/addTask' element={<AddTask/>}/>
               <Route exact path='/users/signup' element={<Signup/>}/>
               <Route exact path='/users/login' element={<Login/>}/>
+              <Route exact path='/' element={<TaskAll/>}/>
               </Routes>
         </div>
   );

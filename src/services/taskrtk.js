@@ -18,7 +18,7 @@ export const taskApi = createApi({
           token:sessionStorage.getItem('token')
         }
       }),
-      providesTags: ["taskModel"],
+      providesTags: ["taskModel"]
     }),
    
     //
@@ -34,6 +34,7 @@ export const taskApi = createApi({
         }
       }),
       providesTags: ["taskModel"],
+      keepUnusedDataFor: 0,
     }),
 
      // Delete Task By ID

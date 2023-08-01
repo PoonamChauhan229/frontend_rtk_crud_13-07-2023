@@ -18,7 +18,7 @@ const Signup = () => {
     axios.post(taskListUrl+'/users/signup',values)
     .then(res=>{
             //console.log(res)
-            if(res.data.Status='Success'){
+            if(res.data.token!==""){
               navigate('/users/login')
             }else{
               alert('Error found')
