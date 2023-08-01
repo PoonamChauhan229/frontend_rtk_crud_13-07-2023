@@ -4,60 +4,88 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {useNavigate} from 'react-router-dom'
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { taskListUrl } from '../utils/constants';
+import { useLogoutMutation,useGetAllTaskQuery } from '../services/taskrtk';
+import { useQueryClient } from 'react-query';
 
-export default function Navbar({mode,setMode}) { 
-  // const cartItems=useSelector(store=>store.cart.items)
-    const navigate = useNavigate();
+import { taskApi } from '../services/taskrtk';
+export default function Navbar({ mode, setMode }) {
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
+  const isAuthenticated = !!sessionStorage.getItem('token');
+  const [logout, { isLoading }] = useLogoutMutation();
+  const getAllTaskQuery = useGetAllTaskQuery();
+
+  const handleLogout = () => {
+    setLoading(true);
+    axios
+      .post(taskListUrl + '/users/logout', {}, {
+        headers: {
+          token: sessionStorage.getItem('token'),
+        },
+      })
+      .then(() => {
+        sessionStorage.removeItem('token');
+        setLoading(false);
+        alert('Logged out successfully');
+        navigate('/');
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error('Error logging out', error);
+      });
+  };
+
   return (
     <>
-    <Box sx={{ display: 'flex' }}>
-        <AppBar component="nav">        
-          <Toolbar>          
+      <Box sx={{ display: 'flex' }}>
+        <AppBar component="nav">
+          <Toolbar>
             <Typography
               variant="h6"
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >ToDo App
+            >
+              ToDo App
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            
-                <Button sx={{ color: '#fff' }} onClick={
-                  ()=>{navigate('/')}
-                }>
-                  Home
-                </Button>
-                <Button sx={{ color: '#fff' }} onClick={
-                  ()=>{navigate('/addTask')}
-                }>
-                  Add Task
-                </Button>
-
-                <Button sx={{ color: '#fff' }} onClick={
-                  ()=>{navigate('/users/signup')}
-                }>
-                  SignUp
-                </Button>
-
-                <Button sx={{ color: '#fff' }} onClick={
-                  ()=>{navigate('/users/login')}
-                }>
-                  Login
-                </Button>
-                               
+              <Button sx={{ color: '#fff' }} onClick={() => { navigate('/'); }}>
+                Home
+              </Button>
+              {isAuthenticated && (
+                <>
+                  <Button sx={{ color: '#fff' }} onClick={() => { navigate('/addTask'); }}>
+                    Add Task
+                  </Button>
+                  <Button sx={{ color: '#fff' }} onClick={() => {handleLogout()}} disabled={loading}>
+                    Logout
+                  </Button>
+                </>
+              )}
+              {!isAuthenticated && (
+                <>
+                  <Button sx={{ color: '#fff' }} onClick={() => { navigate('/users/signup'); }}>
+                    SignUp
+                  </Button>
+                  <Button sx={{ color: '#fff' }} onClick={() => { navigate('/users/login'); }}>
+                    Login
+                  </Button>
+                </>
+              )}
             </Box>
           </Toolbar>
         </AppBar>
-        
+
         <Box component="main" sx={{ p: 1 }}>
           <Toolbar />
         </Box>
-        
-    </Box>
+
+      </Box>
     </>
-      
+
   );
 }
