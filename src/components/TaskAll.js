@@ -6,10 +6,6 @@ import Task from './Task';
 import { useDeleteTaskByIdMutation, useGetAllTaskQuery } from '../services/taskrtk';
 import { useEffect } from 'react';
 
-
-
-
-
 const TaskAll = () => {
   const navigate = useNavigate();
   const [deleteTask] = useDeleteTaskByIdMutation();
