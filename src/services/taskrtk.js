@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { taskListUrl } from '../utils/constants'
 
+
 // Define a service using a base URL and expected endpoints
 export const taskApi = createApi({
   reducerPath: 'taskApi',
@@ -19,6 +20,8 @@ export const taskApi = createApi({
       }),
       providesTags: ["taskModel"],
     }),
+   
+    //
 
 
     // Get Task By ID
@@ -46,23 +49,7 @@ export const taskApi = createApi({
     }),
 
     //Update By ID
-    // updateTaskById:builder.mutation({
-    //   query: (updatedTask) => {
-    //     console.log(updatedTask)
-    //     return{
-    //     url: `/task/${updatedTask._id}`,
-    //     method: "PUT",
-    //     body: updatedTask, //Task which was updated
-    //     headers:{
-    //       token:sessionStorage.getItem('token'),
-    //       'Content-type':'application/json; charset=UTF-8'            
-    //     }
-    //   }
-    //   },
-    //   invalidatesTags: ["taskModel"],
-
-    // }),
-
+    
     updateTaskById: builder.mutation({
       query: (updatedTask) => {
           console.log(updatedTask);
@@ -96,6 +83,7 @@ export const taskApi = createApi({
       },
       invalidatesTags: ['taskModel'],
     }),
+
+  })
 })
-})
-export const { useGetAllTaskQuery,useGetTaskByIdQuery,useDeleteTaskByIdMutation,useUpdateTaskByIdMutation,useAddNewTaskMutation} = taskApi
+export const { useGetAllTaskQuery,useGetTaskByIdQuery,useDeleteTaskByIdMutation,useUpdateTaskByIdMutation,useAddNewTaskMutation,useLogoutMutation} = taskApi

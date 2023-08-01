@@ -24,7 +24,7 @@ function App() {
               <Route exact path='/addTask' element={<AddTask/>}/>
               <Route exact path='/users/signup' element={<Signup/>}/>
               <Route exact path='/users/login' element={<Login/>}/>
-            </Routes>
+              </Routes>
         </div>
   );
 }

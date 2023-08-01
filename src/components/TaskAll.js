@@ -4,15 +4,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate} from "react-router-dom";
 import Task from './Task';
 import { useDeleteTaskByIdMutation, useGetAllTaskQuery} from '../services/taskrtk';
+import { Shimmer } from 'react-shimmer';
+import { useEffect, useState } from 'react';
+
 const TaskAll = () => {
+  const navigate=useNavigate()
+  const [_,setLogin]=useState(true)
   const { data: taskList, isError, isLoading } = useGetAllTaskQuery();
+
   const [deleteTask] = useDeleteTaskByIdMutation();
+  useEffect(()=>{
+    const tokenId=sessionStorage.getItem('token')
+    console.log(tokenId)
+    if(!tokenId){
+      setLogin(false)
+      navigate('/users/login')
+    }
 
-
-  const Navigate = useNavigate();
-
-  //  if(isLoading) return <div>Loading....</div> 
-  // else if(isError) return <div>Error</div>
+  },[])
   
    return (
     <div
@@ -41,7 +50,7 @@ const TaskAll = () => {
           editButton={
             <IconButton color="error" aria-label="add an alarm"
             onClick={
-              ()=>{Navigate(`/task/${element._id}`)}}
+              ()=>{navigate(`/task/${element._id}`)}}
             >
               <EditIcon/>
             </IconButton>
